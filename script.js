@@ -10,3 +10,14 @@ nav?.querySelectorAll("a").forEach(link => link.addEventListener("click", () => 
   toggle?.setAttribute("aria-expanded", "false");
 }));
 document.querySelector("#year").textContent = new Date().getFullYear();
+
+// Automatically remove fbclid from the browser address bar
+(function () {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has('fbclid')) {
+    urlParams.delete('fbclid');
+    const cleanQuery = urlParams.toString();
+    const cleanURL = window.location.pathname + (cleanQuery ? '?' + cleanQuery : '') + window.location.hash;
+    window.history.replaceState(null, '', cleanURL);
+  }
+})();
